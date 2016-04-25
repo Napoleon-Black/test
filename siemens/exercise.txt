@@ -1,0 +1,43 @@
+Welcome to our exercise on the analysis of CSV-like files!
+
+Introduction:
+
+ There are 1000 CSV-like files of the following format:
+  The first line shows the character encoding of the file.
+  The following lines contain the data in three columns:
+  - entity name: one of a, b, c, d, e, f.
+    It describes different entities within a file.
+  - value: a float formatted value
+  - string: a character sequence
+  The columns are separated by ',' (byte 0x2c).
+
+Tasks:
+
+ 1. One goal is to process all files and count the number of occurrences
+    for each entity in the 1000 files.
+
+ 2. Then, how many different strings are found for each entity.
+
+ 3. Finally, a histogram shall visualize the frequency of the values of each entity.
+    Therefore, the value of each entity shall be sorted into 20 intervals:
+	
+    interval 0: -infinite <  value < 1
+    interval 1:         1 <= value < 2
+    interval 2:         2 <= value < 3
+    interval 3:         3 <= value < 4
+    .
+    .
+    .
+    interval 18:       18 <= value < 19
+    interval 19:       19 <= value < infinite
+
+    Count how many values are sorted into which interval for each entity.
+
+ Q1: What kind of distributions can be found for the different entities?
+
+ Q2: There is misformatted data in some of the 1000 files.
+     How do you deal with them? What are the consequences for the analysis?
+
+Have fun,
+
+     Olli
