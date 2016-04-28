@@ -1,3 +1,3 @@
 For start program, use start.py
 
-requirements: sqlite3, chardet
+requirements: python2.7, sqlite3, chardet
