@@ -5,6 +5,7 @@ __author__ = 'Yuriy K.'
 
 import sys, sqlite3, re, chardet
 
+
 class Parser(object):
 
     def __init__(self):
@@ -62,23 +63,11 @@ class Parser(object):
         self.how_much_entity()
 
     def how_much_entity(self):
-        a = self.cur.execute("""SELECT * FROM info WHERE e_name is 'a'""")
-        print 'a = %s' % len(a.fetchall())
-
-        b = self.cur.execute("""SELECT * FROM info WHERE e_name is 'b'""")
-        print 'b = %s' % len(b.fetchall())
-
-        c = self.cur.execute("""SELECT * FROM info WHERE e_name is 'c'""")
-        print 'c = %s' % len(c.fetchall())
-
-        d = self.cur.execute("""SELECT * FROM info WHERE e_name is 'd'""")
-        print 'd = %s' % len(d.fetchall())
-
-        e = self.cur.execute("""SELECT * FROM info WHERE e_name is 'e'""")
-        print 'e = %s' % len(e.fetchall())
-
-        f = self.cur.execute("""SELECT * FROM info WHERE e_name is 'f'""") 
-        print 'f = %s' % len(f.fetchall())
+        items = ('a','b','c','d','e','f')
+        for item in items:
+            sql = """SELECT * FROM info WHERE e_name is '%s'""" % item
+            data = self.cur.execute(sql)
+            print '%s = %s' % (item, len(data.fetchall()))
 
         self.how_much_str()
 
@@ -91,8 +80,35 @@ class Parser(object):
 
 
     def show_histogram(self):
-        pass
+        items = ('a','b','c','d','e','f')
 
+        for item in items:
+            total = 0
+            print '\n','-' * 40, '\n', 'Histogram for entity: %s' % item, '\n'
+            sql = """SELECT value FROM info WHERE e_name IS '%s' AND value < 1""" % item
+            data = self.cur.execute(sql)
+            a1 = len(data.fetchall())
+            total += a1
+            print '-infinite <  value < 1:  %s' % a1
+
+            for i in range (1,19):
+                sql = """SELECT value FROM info WHERE e_name IS '%s' AND value >= %s AND value < %s""" % (item, i, i+1)
+                data = self.cur.execute(sql)
+                a2 = len(data.fetchall())
+                total += a2
+                print '%s <= value < %s:  %s' % (i, i+1, a2)
+
+            sql = """SELECT value FROM info WHERE e_name IS '%s' AND value >= 19""" % item
+            data = self.cur.execute(sql) 
+            a3 = len(data.fetchall())
+            total += a3
+            print '19 <= value < infinite:  %s' % a3
+
+            print '\nCount: %s' % total
+
+            print '\n','-' * 40
+            
+        self.conn.close()
 
 
 if __name__ == '__main__':
