@@ -17,6 +17,7 @@ class Parser(object):
         self.cur.execute("""DELETE FROM info""")
         self.conn.commit()
         self.send_to_database()
+        
 
     def send_to_database(self):
 
@@ -85,20 +86,23 @@ class Parser(object):
         for item in items:
             total = 0
             print '\n','-' * 40, '\n', 'Histogram for entity: %s' % item, '\n'
-            sql = """SELECT value FROM info WHERE e_name IS '%s' AND value < 1""" % item
+            sql = """SELECT value FROM info WHERE e_name IS '%s' 
+                    AND value < 1""" % item
             data = self.cur.execute(sql)
             a1 = len(data.fetchall())
             total += a1
             print '-infinite <  value < 1:  %s' % a1
 
             for i in range (1,19):
-                sql = """SELECT value FROM info WHERE e_name IS '%s' AND value >= %s AND value < %s""" % (item, i, i+1)
+                sql = """SELECT value FROM info WHERE e_name IS '%s' 
+                        AND value >= %s AND value < %s""" % (item, i, i+1)
                 data = self.cur.execute(sql)
                 a2 = len(data.fetchall())
                 total += a2
                 print '%s <= value < %s:  %s' % (i, i+1, a2)
 
-            sql = """SELECT value FROM info WHERE e_name IS '%s' AND value >= 19""" % item
+            sql = """SELECT value FROM info WHERE e_name IS '%s' 
+                    AND value >= 19""" % item
             data = self.cur.execute(sql) 
             a3 = len(data.fetchall())
             total += a3
